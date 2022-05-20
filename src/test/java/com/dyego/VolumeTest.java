@@ -7,19 +7,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
 @ExtendWith(MockitoExtension.class)       // COM ESSA LINHA DA NULLPOINTER EXCEPTION
-//@RunWith(MockitoJUnitRunner.class)          // SO RODA SE TIVER ESSA LINHA
+@RunWith(MockitoJUnitRunner.class)          // SO RODA SE TIVER ESSA LINHA
 
 public class VolumeTest {
     
     // 1 - Crie um mock da classe AudioManager
-    @Mock
-    //AudioManager audioManager = new AudioManager();
-    AudioManager audioManager;
+    //@Mock
+    @Spy
+    AudioManager am;
 
     // 2 - injete um mock da classe VolumeUtil
     @InjectMocks
@@ -31,15 +32,19 @@ public class VolumeTest {
         int vol = 10;
         // 3 - realize uma chamada para o método maximizeVolume do objeto VolumeUtil
         
-        //vu.maximizeVolume(vol); // TA DANDO NULLPOINTER EXCEPTION
-        audioManager.setVolume(vol);
-        System.out.println(audioManager.getVolume());
-        System.out.println(vol);
+        vu.maximizeVolume(vol);
+        //am.setVolume(vol);
+        System.out.println(am.getVolume());
+        //System.out.println(vol);
 
         // 4 - Verifique se o método setVolume foi chamado uma única vez
-        if(audioManager.getVolume() == vol)
+        if(am.getVolume() == vol)
             {
                 System.out.println("FUNCIONOU O MOCK");
+                    }
+        else
+            {
+                System.out.println("NÃO FUNCIONOU O MOCK");
                     }
 }
 }
